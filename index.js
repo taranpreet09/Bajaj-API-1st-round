@@ -1,16 +1,16 @@
-const fs = require("fs");
-const path = require("path");
+
 const axios = require("axios");
 const express = require("express");
 const cors = require("cors");
 
-const env = fs.readFileSync(path.join(__dirname, ".env"), "utf8");
-env.split("\n").forEach(line => {
-  const [key, ...rest] = line.split("=");
-  if (key && !process.env[key]) {
-    process.env[key] = rest.join("=").trim();
-  }
-});
+const fs = require("fs");
+const path = require("path");
+
+const envPath = path.join(__dirname, ".env");
+if (fs.existsSync(envPath)) {
+  require("dotenv").config({ path: envPath });
+}
+
 
 console.log("Gemini key loaded:", !!process.env.GEMINI_API_KEY);
 
